@@ -309,6 +309,8 @@ Clojure Mode에서만 사용하도록 설정 할 수 있습니다.
 
 `company` 패키지가 추가된 상태로 Cider를 실행하면 Clojure Mode에서 자동 완성을 사용할 수 있습니다.
 
+`company-statistics` 패키지를 설치하면 최근 사용했던 자동 완성이 가장 위에 나옵니다.
+
 ### 디버깅
 
 Cider는 함수나 구문에 브레이크 포인트를 걸어 디버깅 할 수 있습니다. Cider를 실행 한 상태로 다음과 같이
@@ -409,6 +411,37 @@ Cider는 더 많은 기능이 있는데 [Cider 공식 문서](http://docs.cider.
 
 ```elisp
 (fset 'yes-or-no-p 'y-or-n-p)
+```
+
+### 커서가 레벨 부터 상위 레벨을 선택하기
+
+`expand-region` 패키지를 설치하면 현재 단계부터 윗 단계를 차례로 선택할 수 있다.
+```
+
+### 동시에 여러 곳을 고치기
+
+`multiple-cursors` 패키지로 여러곳을 함께 고칠 수 있다.
+
+
+### REPL에 커맨드 전송하기
+
+`duct`나 `component`와 같은 프레임워크를 사용할 때 시스템 재시작을 하기 위해 REPL에서 `reset`을 자주 입력하게 되는데
+이 명령어를 단축키로 만들어두면 편리하다.
+
+```elisp
+(defun cider-execute (command)
+  (interactive)
+  (set-buffer (car (find-buffer-regex "cider-repl.*")))
+  (goto-char (point-max))
+  (insert command)
+  (cider-repl-return))
+
+(defun nrepl-reset ()
+  (interactive)
+  (cider-execute "(reset)")
+  (message "Reset")
+
+(define-key cider-mode-map (kbd "C-c r") 'nrepl-reset)
 ```
 
 지금까지 나온 내용을 정리한 [init.el](./init.el)입니다.
