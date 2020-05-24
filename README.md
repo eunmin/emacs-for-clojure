@@ -52,7 +52,7 @@ brew install --with-cocoa --srgb emacs
 ```
 
 ### 파일 열어보기
-
+nn
 ```bash
 $ touch hello
 
@@ -403,6 +403,40 @@ Cider는 더 많은 기능이 있는데 [Cider 공식 문서](http://docs.cider.
 (setq linum-format "%3d ")
 
 (setq column-number-mode t)
+```
+
+### 탭바 사용하기
+
+여러 탭바 패키지가 있지만 `centaur-tabs`를 다음과 같이 설정해서 사용합니다. 탭이동은 `C-c C-방향키`로 합니다.
+
+```elisp
+(use-package centaur-tabs
+  :ensure t
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (setq centaur-tabs-set-close-button nil)
+  (setq centaur-tabs-set-modified-marker t)
+  (centaur-tabs-group-by-projectile-project)
+  (setq centaur-tabs-modified-marker "*")
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward))
+```
+
+### 파일 탐색
+
+파일 탐색을 위한 패키지도 많이 있지만 `treemacs`를 사용했습니다. 
+
+```elisp
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (treemacs-resize-icons 16))
 ```
 
 ### yes/no 물어 보는 것을 y/n으로 입력 하도록 하기

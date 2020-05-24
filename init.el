@@ -4,6 +4,8 @@
 
 (package-initialize)
 
+(server-start)
+
 (let ((is-emacs-mac-by-yamamaoto
        (and (boundp 'mac-carbon-version-string)
             (string= window-system "mac"))))
@@ -149,6 +151,36 @@
 (use-package edit-indirect
   :ensure t)
 
+(use-package centaur-tabs
+  :ensure t
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (setq centaur-tabs-set-close-button nil)
+  (setq centaur-tabs-set-modified-marker t)
+  (centaur-tabs-group-by-projectile-project)
+  (setq centaur-tabs-modified-marker "*")
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward))
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (treemacs-resize-icons 16)
+  :bind
+  (:map global-map
+	("C-x t t" . treemacs)))
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
+
+
 (defun cider-execute (command)
   (interactive)
   (set-buffer (car (find-buffer-regex "cider-repl.*")))
@@ -162,3 +194,17 @@
   (message "Reset"))
 
 (define-key cider-mode-map (kbd "C-c r") 'nrepl-reset)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (treemacs-projectile treemacs centaur-tabs use-package rainbow-delimiters markdown-mode helm-projectile expand-region edit-indirect company-statistics command-log-mode color-theme-sanityinc-tomorrow clj-refactor airline-themes))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
