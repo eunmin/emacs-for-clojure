@@ -377,14 +377,14 @@ Cider는 더 많은 기능이 있는데 [Cider 공식 문서](http://docs.cider.
   (load-theme 'sanityinc-tomorrow-day t))
 ```
 
-툴바, 스크롤바는 없애고 폰트는 `Monaco`로 사용하고 실행할 때 항상 윈도우는 최대화 되도록 사용합니다.
+툴바, 스크롤바는 없애고 폰트는 `Fira Code`로 사용하고 실행할 때 항상 윈도우는 최대화 되도록 사용합니다.
 
 ```elisp
 (when (display-graphic-p)
   (progn
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
-    (set-frame-font "Monaco 14")
+    (set-frame-font "Fira Code 13")
     (toggle-frame-maximized)))
 ```
 
@@ -405,9 +405,21 @@ Cider는 더 많은 기능이 있는데 [Cider 공식 문서](http://docs.cider.
 (setq column-number-mode t)
 ```
 
+### 프로젝트 관리하기
+
+`leiningen` 프로젝트를 이맥스에서 프로젝트 형태로 관리하려면 [projectile](https://github.com/bbatsov/projectile) 패키지를 이용하면 좋습니다. 테스트를 돌리거나 프로젝트를 빌드하기 편리합니다.
+
+```elisp
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-global-mode +1))
+```
+
 ### 탭바 사용하기
 
-여러 탭바 패키지가 있지만 `centaur-tabs`를 다음과 같이 설정해서 사용합니다. 탭이동은 `C-c C-방향키`로 합니다.
+여러 탭바 패키지가 있지만 `centaur-tabs`를 다음과 같이 설정해서 사용합니다. 탭이동은 `C-c C-방향키`로 합니다. 다른 탭바는 
 
 ```elisp
 (use-package centaur-tabs
@@ -479,3 +491,7 @@ Cider는 더 많은 기능이 있는데 [Cider 공식 문서](http://docs.cider.
 ```
 
 지금까지 나온 내용을 정리한 [init.el](./init.el)입니다.
+
+## 더 다양한 패키지를 찾으려면
+
+유용한 패키지를 모아논 [awesome-emacs](https://github.com/emacs-tw/awesome-emacs#navigation) 리포지토리를 가보면 많이 있습니다.
